@@ -2,6 +2,50 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
+  //useReducer -day, application data, update interview
+  /* 
+
+const SET_DAY = "SET_DAY";
+const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
+const SET_INTERVIEW = "SET_INTERVIEW";
+
+function reducer(state, action) {
+  switch (action.type) {
+    case SET_DAY:
+        return {...state, day: action.value}
+      case SET_APPLICATION_DATA:
+        return {...action.value}
+      case SET_INTERVIEW: {
+        return {...state, interview: action.value}
+      }
+      default:
+        throw new Error(
+          `Tried to reduce with unsupported action type: ${action.type}`
+        );
+    }
+  }
+
+const initial = {
+    day: "Monday",
+    days: [],
+    appointments: {},
+    interviewers: {},
+  }
+
+const reducerFun = (state, action){
+  const { day, days, appointments, interviewers} = action;
+  
+  if (action.type === "day"){
+    return {...state, day: action.value} 
+  }
+}
+
+const [state, dispatch] = useReducer(reducerFuc, initial)
+
+
+
+*/
+
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -10,8 +54,6 @@ export default function useApplicationData() {
   });
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
-  const setAppointments = (appointments) =>
-    setState((prev) => ({ ...prev, appointments }));
 
   const updateSpots = (appointments) => {
     let count = 0;
@@ -29,7 +71,7 @@ export default function useApplicationData() {
       return day;
     });
 
-    setState((prev) => ({ ...prev, days }));
+    setState((prev) => ({ ...prev, days })); // ()=>dispatch({type: ,value:})
   };
 
   function bookInterview(id, interview) {
@@ -43,12 +85,10 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    setState({ ...state, appointments });
-
     return axios
       .put(`/api/appointments/${id}`, appointment)
       .then(() => {
-        setAppointments(appointments);
+        setState((prev) => ({ ...prev, appointments }));
       })
       .then(() => updateSpots(appointments));
   }
@@ -64,11 +104,9 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    setState({ ...state, appointments });
-
     return axios
       .delete(`/api/appointments/${id}`)
-      .then(() => setAppointments(appointments))
+      .then(() => setState((prev) => ({ ...prev, appointments })))
       .then(() => updateSpots(appointments));
   }
 
