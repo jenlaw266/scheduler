@@ -1,9 +1,9 @@
 export function getAppointmentsForDay(state, day) {
-  if (state.days.length === 0 || state.appointments === 0) return [];
-
   const selectedDay = state.days.filter((obj) => {
     return obj.name === day;
   });
+
+  if (state.appointments === 0 || selectedDay.length === 0) return [];
 
   const appointments = selectedDay[0].appointments
     .map((id) => {
