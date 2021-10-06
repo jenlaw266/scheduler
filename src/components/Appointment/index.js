@@ -31,11 +31,10 @@ const Appointment = (props) => {
       interviewer,
     };
     transition(SAVING); //loading
-    props.bookInterview(props.id, interview);
-    transition(SHOW);
-
-    // .then(() => transition(SHOW))
-    // .catch((err) => transition(ERROR_SAVE));
+    props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch((err) => transition(ERROR_SAVE, true));
   }
 
   function confirm() {
@@ -43,9 +42,11 @@ const Appointment = (props) => {
   }
 
   function destroy() {
-    transition(DELETING);
-    props.cancelInterview(props.id);
-    transition(EMPTY);
+    transition(DELETING, true);
+    props
+      .cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+      .catch(() => transition(ERROR_DELETE, true));
   }
 
   return (
@@ -54,7 +55,7 @@ const Appointment = (props) => {
       {mode === SHOW && (
         <Show
           student={props.interview.student}
-          interviewer={props.interview.interviewer}
+          interviewer={props.name}
           onDelete={confirm}
           onEdit={() => transition(EDIT)}
         />

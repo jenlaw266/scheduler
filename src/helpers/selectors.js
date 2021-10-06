@@ -5,21 +5,20 @@ export function getAppointmentsForDay(state, day) {
     return obj.name === day;
   });
 
-  const appointments = selectedDay[0].appointments.map(
-    (id) => state.appointments[id]
-  );
+  const appointments = selectedDay[0].appointments
+    .map((id) => {
+      return state.appointments[id];
+    })
+    .map((item) => {
+      if (item.interview && item.interview.interviewer) {
+        return {
+          ...item,
+          name: state.interviewers[item.interview.interviewer].name,
+        };
+      }
+      return item;
+    });
 
-  /*   for (const each of appointmentsArray) {
-    if (each.interview) {
-      console.log("id: ", each.interview.interviewer);
-      const interviewerName =
-        state.interviewers[each.interview.interviewer].name;
-      console.log("name: ", interviewerName);
-
-      // each.interview.interviewer =
-      //   state.interviewers[each.interview.interviewer].name;
-    }
-  } */
   return appointments;
 }
 
