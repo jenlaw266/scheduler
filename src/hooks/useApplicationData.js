@@ -2,50 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
-  //useReducer -day, application data, update interview
-  /* 
-
-const SET_DAY = "SET_DAY";
-const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-const SET_INTERVIEW = "SET_INTERVIEW";
-
-function reducer(state, action) {
-  switch (action.type) {
-    case SET_DAY:
-        return {...state, day: action.value}
-      case SET_APPLICATION_DATA:
-        return {...action.value}
-      case SET_INTERVIEW: {
-        return {...state, interview: action.value}
-      }
-      default:
-        throw new Error(
-          `Tried to reduce with unsupported action type: ${action.type}`
-        );
-    }
-  }
-
-const initial = {
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: {},
-  }
-
-const reducerFun = (state, action){
-  const { day, days, appointments, interviewers} = action;
-  
-  if (action.type === "day"){
-    return {...state, day: action.value} 
-  }
-}
-
-const [state, dispatch] = useReducer(reducerFuc, initial)
-
-
-
-*/
-
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -71,7 +27,7 @@ const [state, dispatch] = useReducer(reducerFuc, initial)
       return day;
     });
 
-    setState((prev) => ({ ...prev, days })); // ()=>dispatch({type: ,value:})
+    setState((prev) => ({ ...prev, days }));
   };
 
   function bookInterview(id, interview) {
@@ -106,6 +62,7 @@ const [state, dispatch] = useReducer(reducerFuc, initial)
 
     return axios
       .delete(`/api/appointments/${id}`)
+
       .then(() => setState((prev) => ({ ...prev, appointments })))
       .then(() => updateSpots(appointments));
   }
