@@ -33,7 +33,7 @@ export default function useApplicationData() {
 
   const [state, dispatch] = useReducer(reducer, initial);
 
-  // const setDay = (day) => dispatch({ type: SET_DAY, value: day });
+  const setDay = (day) => dispatch({ type: SET_DAY, value: day });
 
   const updateSpots = (appointments) => {
     let count = 0;
