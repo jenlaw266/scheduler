@@ -1,6 +1,7 @@
 # Interview Scheduler
 
-!["desktop"](https://github.com/jenlaw266/scheduler/blob/master/Screen Shot 2021-10-09 at 6.44.26 PM.png?raw=true)
+![""](https://github.com/jenlaw266/scheduler/blob/master/screenshots/adding.png?raw=true)
+![""](https://github.com/jenlaw266/scheduler/blob/master/screenshots/appointmnet.png?raw=true)
 
 ## Setup
 
